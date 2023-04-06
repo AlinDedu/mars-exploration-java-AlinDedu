@@ -1,6 +1,7 @@
 package com.codecool.marsexploration.logic.phase;
 
 import com.codecool.marsexploration.data.Context;
+import com.codecool.marsexploration.data.Rover;
 import com.codecool.marsexploration.helpers.Database;
 
 import java.io.FileWriter;
@@ -11,12 +12,15 @@ import java.sql.SQLException;
 
 public class Log implements Phase{
     @Override
-    public void perform(Context context) {
+    public void perform(Context context, Rover rover) {
         String log;
+
+        String event = rover.getPosition().equals(rover.getResCoordinate()) ? "Extracting" : rover.getEvent();
+
         if (context.getOutcome() == null) {
             log = "STEP " + context.getStepNumber()
-                    + "; EVENT position; UNIT " + context.getRover().getId()
-                    + "; POSITION [" + context.getRover().getPosition().x() + "," + context.getRover().getPosition().y() + "]";
+                    + "; EVENT "+ event +"; UNIT " + rover.getId()
+                    + "; POSITION [" + rover.getPosition().x() + "," + rover.getPosition().y() + "]";
         } else {
             log = "STEP " + context.getStepNumber() + "; EVENT outcome; OUTCOME " + context.getOutcome();
         }
@@ -25,7 +29,7 @@ public class Log implements Phase{
         write(log, context.getLogFilePath());
 
         try{
-            Database.logInsert(context.getConnection(), context.getMapNameWithoutExtension(), context.getStepNumber(), context.getOutcome() == null ? "position" : "OUTCOME_" + context.getOutcome(), context.getRover().getId(), context.getRover().getPosition().x(), context.getRover().getPosition().y());
+            Database.logInsert(context.getConnection(), context.getMapNameWithoutExtension(), context.getStepNumber(), context.getOutcome() == null ? "position" : "OUTCOME_" + context.getOutcome(), rover.getId().toString(), rover.getPosition().x(), rover.getPosition().y());
         }catch (SQLException ex) {
             throw new RuntimeException(ex);
         }

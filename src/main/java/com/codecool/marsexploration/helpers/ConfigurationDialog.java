@@ -34,14 +34,6 @@ public class ConfigurationDialog {
         timeoutField.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(timeoutField);
 
-        JLabel roverNameLabel = new JLabel("Rover Name:");
-        roverNameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.add(Box.createVerticalStrut(10));
-        panel.add(roverNameLabel);
-        JTextField roverNameField = new JTextField(10);
-        roverNameField.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.add(roverNameField);
-
         JLabel roverSightLabel = new JLabel("Rover Sight:");
         roverSightLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(Box.createVerticalStrut(10));
@@ -65,11 +57,10 @@ public class ConfigurationDialog {
             int landingX = Integer.parseInt(landingXField.getText());
             int landingY = Integer.parseInt(landingYField.getText());
             int timeout = Integer.parseInt(timeoutField.getText());
-            String roverName = roverNameField.getText();
             int roverSight = Integer.parseInt(roverSightField.getText());
             int resourcesRequired = Integer.parseInt(resourcesRequiredField.getText());
 
-            return new Configuration(landingX, landingY, timeout, roverName, roverSight, resourcesRequired);
+            return new Configuration(landingX, landingY, timeout, roverSight, resourcesRequired);
         }
 
         return null;

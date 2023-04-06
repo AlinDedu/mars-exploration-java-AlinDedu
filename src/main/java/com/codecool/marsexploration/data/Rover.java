@@ -6,17 +6,22 @@ import com.codecool.marsexploration.logic.routine.Routine;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Rover {
     private final String id;
     private Coordinate position;
     private final int sight;
     private Routine routine;
-    private final List<Phase> phases;
-    private final List<Analyzer> analyzers;
+    private List<Phase> phases;
+    private List<Analyzer> analyzers;
     private final List<Coordinate> exploredCoordinates;
     private final List<Coordinate> interestingCoordinates;
     private final List<Coordinate> spottedAliens;
+    private Coordinate target;
+    private Coordinate resCoordinate;
+    private Coordinate commandCenterCoordinate;
+    private String event;
 
     public Rover(String id, Coordinate position, int sight) {
         this.id = id;
@@ -28,6 +33,10 @@ public class Rover {
         this.interestingCoordinates = new ArrayList<>();
         this.spottedAliens = new ArrayList<>();
         this.routine = null;
+        this.target = null;
+        this.resCoordinate = null;
+        this.commandCenterCoordinate = null;
+        this.event = "Position";
     }
     public String getId() {
         return id;
@@ -62,11 +71,17 @@ public class Rover {
     public List<Phase> getPhases() {
         return phases;
     }
+    public void resetPhase() {
+        this.phases = new ArrayList<>();
+    }
     public void addPhase(Phase phase) {
         this.phases.add(phase);
     }
     public List<Analyzer> getAnalyzers() {
         return analyzers;
+    }
+    public void resetAnalyzers() {
+        this.analyzers = new ArrayList<>();
     }
     public void addAnalyzer(Analyzer analyzers) {
         this.analyzers.add(analyzers);
@@ -76,5 +91,35 @@ public class Rover {
     }
     public void addSpottedAliens(Coordinate spottedAliens) {
         this.spottedAliens.add(spottedAliens);
+    }
+    public Coordinate getTarget() {
+        return target;
+    }
+    public void setTarget(Coordinate target) {
+        this.target = target;
+    }
+
+    public Coordinate getResCoordinate() {
+        return resCoordinate;
+    }
+
+    public void setResCoordinate(Coordinate resCoordinate) {
+        this.resCoordinate = resCoordinate;
+    }
+
+    public Coordinate getCommandCenterCoordinate() {
+        return commandCenterCoordinate;
+    }
+
+    public void setCommandCenterCoordinate(Coordinate commandCenterCoordinate) {
+        this.commandCenterCoordinate = commandCenterCoordinate;
+    }
+
+    public String getEvent() {
+        return event;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
     }
 }

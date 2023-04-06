@@ -6,7 +6,7 @@ import java.io.File;
 
 public class MapFileSelector {
     public static String select() {
-        JFileChooser fileChooser = new JFileChooser("C:\\Projects\\Learning\\mars-exploration-2-java-pilatdenis99\\src\\main\\resources");
+        JFileChooser fileChooser = new JFileChooser("C:\\Projects\\OOP\\Week 5\\mars-exploration-3-java-AlinDedu\\src\\main\\resources");
         fileChooser.setFileFilter(new FileNameExtensionFilter("Map Files", "map"));
         int result = fileChooser.showOpenDialog(null);
         if (result == JFileChooser.APPROVE_OPTION) {

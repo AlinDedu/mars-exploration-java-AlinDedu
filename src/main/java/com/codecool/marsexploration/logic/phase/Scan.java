@@ -2,6 +2,7 @@ package com.codecool.marsexploration.logic.phase;
 
 import com.codecool.marsexploration.data.Context;
 import com.codecool.marsexploration.data.Coordinate;
+import com.codecool.marsexploration.data.Rover;
 import com.codecool.marsexploration.data.Symbol;
 import com.codecool.marsexploration.logic.Finder;
 
@@ -9,17 +10,17 @@ import java.util.List;
 
 public class Scan implements Phase{
     @Override
-    public void perform(Context context) {
-        Coordinate roverPosition = context.getRover().getPosition();
-        List<Coordinate> neighbors = Finder.find(roverPosition, context.getRover().getInterestingCoordinates(), context.getMap().length, context.getRover().getSight());
+    public void perform(Context context, Rover rover) {
+        Coordinate roverPosition = rover.getPosition();
+        List<Coordinate> neighbors = Finder.find(roverPosition, rover.getInterestingCoordinates(), context.getMap().length, rover.getSight());
         for (Coordinate coordinate : neighbors) {
             Symbol symbol = context.getMap()[coordinate.x()][coordinate.y()];
             if (symbol == Symbol.MINERAL || symbol == Symbol.WATER) {
-                if (!context.getRover().getInterestingCoordinates().contains(coordinate))
-                    context.getRover().addInterestingCoordinates(coordinate);
+                if (!rover.getInterestingCoordinates().contains(coordinate))
+                    rover.addInterestingCoordinates(coordinate);
             } else if (symbol == Symbol.ALIEN) {
-                if (!context.getRover().getSpottedAliens().contains(coordinate))
-                    context.getRover().addSpottedAliens(coordinate);
+                if (!rover.getSpottedAliens().contains(coordinate))
+                    rover.addSpottedAliens(coordinate);
             }
         }
     }

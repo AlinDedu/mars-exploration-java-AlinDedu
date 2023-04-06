@@ -8,7 +8,7 @@ import java.util.Optional;
 public class SuccessAnalyzer implements Analyzer{
     @Override
     public Optional<Outcome> analyze(Context context) {
-        int resourcesCount = context.getRover().getInterestingCoordinates().size();
+        int resourcesCount = context.getRovers().get(0).getInterestingCoordinates().size();
         int stepNumber = context.getStepNumber();
         if (resourcesCount >= context.getResourcesRequired()
                 || ((resourcesCount >= (context.getResourcesRequired()*0.5)) && (stepNumber <= context.getTimeout()*0.1))) {

@@ -8,7 +8,7 @@ import java.util.Optional;
 public class LackOfResourcesAnalyzer implements Analyzer{
     @Override
     public Optional<Outcome> analyze(Context context) {
-        int resourcesCount = context.getRover().getInterestingCoordinates().size();
+        int resourcesCount = context.getRovers().get(0).getInterestingCoordinates().size();
         int stepNumber = context.getStepNumber();
         float remainingSteps = (context.getTimeout() - stepNumber);
         int resourcesLeftToFind = context.getResourcesRequired() - resourcesCount;

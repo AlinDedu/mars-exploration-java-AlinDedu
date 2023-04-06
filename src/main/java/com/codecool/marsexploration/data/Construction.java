@@ -4,12 +4,12 @@ import java.util.Map;
 
 public class Construction {
     private final String id;
-    private final Map<ResourceType, Integer> requiredResources;
+    private final int requiredResources;
     private CommandCenter commandCenter;
     private int step;
     private boolean isCompleted;
 
-    public Construction(String id, Map<ResourceType, Integer> requiredResources) {
+    public Construction(String id, int requiredResources) {
         this.id = id;
         this.requiredResources = requiredResources;
         this.commandCenter = null;
@@ -21,7 +21,7 @@ public class Construction {
         return id;
     }
 
-    public Map<Resource, Integer> getRequiredResources() {
+    public int getRequiredResources() {
         return requiredResources;
     }
 
@@ -45,22 +45,22 @@ public class Construction {
         return isCompleted;
     }
 
-    public void removeResources(Map<ResourceType, Integer> resources) {
-        for (ResourceType resourceType : resources.keySet()) {
-            int requiredQuantity = requiredResources.get(resourceType);
-            int availableQuantity = resources.get(resourceType);
-
-            int remainingQuantity = requiredQuantity - availableQuantity;
-            if (remainingQuantity <= 0) {
-                requiredResources.remove(resourceType);
-            } else {
-                requiredResources.put(resourceType, remainingQuantity);
-            }
-        }
-    }
-
-    public void complete() {
-        isCompleted = true;
-        commandCenter.addCompletedConstruction(this);
-    }
+//    public void removeResources(Map<ResourceType, Integer> resources) {
+//        for (ResourceType resourceType : resources.keySet()) {
+//            int requiredQuantity = requiredResources.get(resourceType);
+//            int availableQuantity = resources.get(resourceType);
+//
+//            int remainingQuantity = requiredQuantity - availableQuantity;
+//            if (remainingQuantity <= 0) {
+//                requiredResources.remove(resourceType);
+//            } else {
+//                requiredResources.put(resourceType, remainingQuantity);
+//            }
+//        }
+//    }
+//
+//    public void complete() {
+//        isCompleted = true;
+//        commandCenter.addCompletedConstruction(this);
+//    }
 }

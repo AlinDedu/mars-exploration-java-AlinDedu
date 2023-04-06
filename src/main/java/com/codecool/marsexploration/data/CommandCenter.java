@@ -1,29 +1,33 @@
 package com.codecool.marsexploration.data;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class CommandCenter {
-    private int id;
-    private Location location;
+    private final int id;
+    private Coordinate location;
     private Status status;
-    private Map<Resource, Integer> resourcesOnStock;
+    private int resourcesOnStock;
+    private List<Coordinate> resourcesCoordinates;
 
-    public CommandCenter(int id, Location location, Status status, Map<Resource, Integer> resourcesOnStock) {
+    public CommandCenter(int id, Coordinate location, Status status, int resourcesOnStock) {
         this.id = id;
         this.location = location;
         this.status = status;
         this.resourcesOnStock = resourcesOnStock;
+        this.resourcesCoordinates = new ArrayList<>();
     }
 
     public int getId() {
         return id;
     }
 
-    public Location getLocation() {
+    public Coordinate getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(Coordinate location) {
         this.location = location;
     }
 
@@ -35,64 +39,37 @@ public class CommandCenter {
         this.status = status;
     }
 
-    public Map<Resource, Integer> getResourcesOnStock() {
+    public int getResourcesOnStock() {
         return resourcesOnStock;
     }
 
-    public void setResourcesOnStock(Map<Resource, Integer> resourcesOnStock) {
+    public void setResourcesOnStock(int resourcesOnStock) {
         this.resourcesOnStock = resourcesOnStock;
     }
-    public void addResource(Resource resource, int amount) {
-        if (resourcesOnStock.containsKey(resource)) {
-            int currentAmount = resourcesOnStock.get(resource);
-            resourcesOnStock.put(resource, currentAmount + amount);
-        } else {
-            resourcesOnStock.put(resource, amount);
-        }
+    public void addResource(int amount) {
+       resourcesOnStock += amount;
     }
 
-    public void removeResource(Resource resource, int amount) {
-        if (resourcesOnStock.containsKey(resource)) {
-            int currentAmount = resourcesOnStock.get(resource);
-            if (currentAmount >= amount) {
-                resourcesOnStock.put(resource, currentAmount - amount);
-            } else {
-                throw new IllegalArgumentException("Not enough " + resource + " in stock!");
-            }
-        } else {
-            throw new IllegalArgumentException("No " + resource + " in stock!");
-        }
+    public void removeResource(int amount) {
+        resourcesOnStock -= amount;
     }
 
-    public boolean hasEnoughResources(Map<Resource, Integer> requiredResources) {
-        for (Map.Entry<Resource, Integer> entry : requiredResources.entrySet()) {
-            Resource resource = entry.getKey();
-            int requiredAmount = entry.getValue();
-            if (!resourcesOnStock.containsKey(resource) || resourcesOnStock.get(resource) < requiredAmount) {
-                return false;
-            }
-        }
-        return true;
+    public boolean hasEnoughResources(int requiredResources) {
+        return resourcesOnStock >= requiredResources;
     }
 
-    public boolean canConstruct(Construction construction) {
-        return hasEnoughResources(construction.getRequiredResources());
+    public List<Coordinate> getResourcesCoordinates() {
+        return resourcesCoordinates;
     }
 
-//    public void construct(Construction construction) {
-//        if (canConstruct(construction)) {
-//            construction.removeResources();
-//            construction.complete();
-//        } else {
-//            throw new IllegalArgumentException("Not enough resources to construct " + construction);
-//        }
-//    }
-//    public void addCompletedConstruction(Construction construction) {
-//        int constructionCost = construction.getRequiredResources().getTotalResources();
-//        stock.removeResources(construction.getRequiredResources());
-//        completedConstructions.add(construction);
-//        construction.setCompleted(true);
-//        usedResources += constructionCost;
-//    }
+    public Coordinate getResourceCoordinate(int index) {
+        return resourcesCoordinates.get(index);
+    }
+    public void setResourcesCoordinates(List<Coordinate> resourcesCoordinates) {
+        this.resourcesCoordinates = resourcesCoordinates;
+    }
 
+    public void removeResourceCoordinate(Coordinate coordinate) {
+        resourcesCoordinates.remove(coordinate);
+    }
 }

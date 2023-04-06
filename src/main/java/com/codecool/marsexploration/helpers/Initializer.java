@@ -6,13 +6,14 @@ import com.codecool.marsexploration.logic.phase.*;
 import com.codecool.marsexploration.logic.routine.RandomExplorationRoutine;
 
 import java.sql.Connection;
+import java.util.List;
 
 public class Initializer {
     public static Context explorationInit(SimulationInput input) {
         String[] mapName = input.mapPath().split("/");
         String nameWithoutExtension = mapName[mapName.length -1].split("\\.")[0];
         Connection connection = Database.init(nameWithoutExtension);
-        Rover rover = new Rover(input.roverName(), input.landing(), input.roverSight());
+        Rover rover = new Rover("Rover-1", input.landing(), input.roverSight());
         rover.setRoutine(new RandomExplorationRoutine());
         rover.addPhase(new Movement());
         rover.addPhase(new Scan());
@@ -20,13 +21,13 @@ public class Initializer {
         rover.addPhase(new Log());
         rover.addPhase(new StepIncrement());
 
-        rover.addAnalyzer(new TimeoutAnalyzer());
-        rover.addAnalyzer(new SuccessAnalyzer());
         rover.addAnalyzer(new LackOfResourcesAnalyzer());
-        rover.addAnalyzer(new AlienSpotter());
+        rover.addAnalyzer(new TimeoutAnalyzer());
 
         Symbol[][] map = new MapReader(input.mapPath()).getArray();
-        return new Context(connection, 0, input.timeout(), map, input.landing(), rover, input.logPath(), input.resourcesRequired(), nameWithoutExtension);
+        Context context = new Context(connection, 0, input.timeout(), map, input.landing(), input.logPath(), input.resourcesRequired(), nameWithoutExtension);
+        context.addRover(rover);
+        return context;
     }
     public static SimulationInput input() {
         String fileName = MapFileSelector.select();
@@ -39,7 +40,6 @@ public class Initializer {
                     new Coordinate(config.getLandingX(), config.getLandingY()),
                     config.getTimeout(),
                     "src/main/resources/" + nameWithoutExtension + ".log",
-                    config.getRoverName(),
                     config.getRoverSight(),
                     config.getResourcesRequired());
         }
