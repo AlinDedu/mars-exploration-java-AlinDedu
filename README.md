@@ -43,7 +43,7 @@ The Mars Exploration and Colonization project offers the following features:
 
 To get started with the Mars Exploration and Colonization project, follow these steps:
 
-1. Clone the repository: git clone https://github.com/your-username/mars-exploration-colonization.git
+1. Clone the repository: git clone https://github.com/AlinDedu/mars-exploration-java-AlinDedu.git
 
 2. Open the project in your preferred Java development environment.
 
