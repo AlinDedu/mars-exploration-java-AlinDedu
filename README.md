@@ -61,12 +61,17 @@ The Mars Exploration and Colonization project provides two main entry points:
 
    - Execute the simulate method to start the exploration simulation.
    - Customize the simulation parameters and rules according to your needs.
-
+![Alt Text](screenshot1.PNG)
+![Alt Text](screenshot2.PNG)
 2. **ColonizationSimulator:** Simulates the colonization phase on Mars.
 
    - Execute the simulate method, providing the context from the exploration phase as input.
+     ![Alt Text](screenshot3.PNG)
+   
+   
    - Customize the simulation parameters and rules according to your needs.
 
+![Alt Text](screenshot4.PNG)
 ### Contributing
 
 Contributions to the Mars Exploration and Colonization project are welcome! If you find any issues or want to add new features, please follow these steps:
